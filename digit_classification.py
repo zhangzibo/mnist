@@ -48,7 +48,13 @@ def onehot_encoding(y, num_labels =10):
 
 def sigmoid(z):
     # return (1/(1 + np.exp(-z)))
+    #expit is the same as the one above, just a built in from scipu
     return expit(z)
+
+def sigmoid_gradiant(z):
+    s = sigmoid()
+    #plug and chug
+    return s*(1-s)
 
 def visualize_sigmoid():
     x = np.arange(-10, 10, 0.1)
@@ -56,5 +62,12 @@ def visualize_sigmoid():
     fig, ax = plt.subplots()
     ax.plot(x,y)
     plt.show()
+
+def calc_cost(y_enc, output):
+    #look at the screenshot for cost function NN formula
+    t1 = -y_enc *np.log(output)    #yk ^i is -y_enc     log is np.log     h theta x(i) is output
+    t2 = (1-yenc) * np.log(1- output)  #t2 is everything thats after the plut sign in formula
+    cost = np.sum(t1-t2) #the summation but since -1/m in teh front we take the differnece?
+    return cost
 
 visualize_sigmoid()
