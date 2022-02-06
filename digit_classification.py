@@ -2,6 +2,7 @@ import struct
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+from scipy.special import expit
 
 def load_data():
     with open("train-labels-idx1-ubyte", "rb") as labels:
@@ -34,6 +35,26 @@ def vistualize_data(img_array, label_array):
         ax[i].imshow(img,cmap="Greys", interpolation="nearest")
     plt.show()
 
-train_x,train_y, test_x,test_y =load_data()
+# train_x,train_y, test_x,test_y =load_data()
 
-vistualize_data(train_x,train_y)
+# vistualize_data(train_x,train_y)
+
+def onehot_encoding(y, num_labels =10):
+    one_hot = np.zeros((num_labels, y.shape[0]))
+    # print(one_hot)
+    for i, val in enumerate(y):
+        one_hot[val,i]= 1.0
+    return one_hot
+
+def sigmoid(z):
+    # return (1/(1 + np.exp(-z)))
+    return expit(z)
+
+def visualize_sigmoid():
+    x = np.arange(-10, 10, 0.1)
+    y = sigmoid(x)
+    fig, ax = plt.subplots()
+    ax.plot(x,y)
+    plt.show()
+
+visualize_sigmoid()
